@@ -1,0 +1,163 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Chapter&#160;1.&#160;Boost.Stringify</title>
+<link rel="stylesheet" href="../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="next" href="tutorial/tutorial.html" title="Tutorial">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../boost.png"></td>
+<td align="center"><a href="../../index.html">Home</a></td>
+<td align="center"><a href="../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="tutorial/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a></div>
+<div class="chapter">
+<div class="titlepage"><div>
+<div><h2 class="title">
+<a name="boost_stringify"></a>Chapter&#160;1.&#160;Boost.Stringify</h2></div>
+<div><div class="legalnotice">
+<a name="boost_stringify.legal"></a><p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p>
+</div></div>
+</div></div>
+<div class="toc">
+<p><b>Table of Contents</b></p>
+<dl class="toc">
+<dt><span class="section"><a href="index.html#boost_stringify.overview">Overview</a></span></dt>
+<dt><span class="section"><a href="tutorial/tutorial.html">Tutorial</a></span></dt>
+<dt><span class="section"><a href="output_types/output_types.html">Destination types</a></span></dt>
+<dt><span class="section"><a href="input_types/input_types.html">Input types</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="input_types/input_types.html#input_types.input_types.conventional">"Conventional"
+      input types</a></span></dt>
+<dt><span class="section"><a href="input_types/input_types.html#input_types.input_types.special_input_types">"Special"
+      input types</a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="facets/facet_categories.html">Facet Categories</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.width">Width</a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.alignment_a_k_a_justification">Alignment
+      - <span class="emphasis"><em>a.k.a</em></span> justification</a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.fill_character">Fill character</a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.positive_sign_presence">Positive
+      sign presence</a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.integer_base">Integer base</a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.integer_base_indication_presence">Integer
+      base indication presence</a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.case">Case</a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.width_calculation_todo">Width
+      calculation <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.thousand_separator_todo">Thousand
+      separator <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.numeric_grouping_todo">Numeric
+      grouping <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.utf_32_to_narrow_string_converti">UTF-32
+      to narrow string convertion <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+<dt><span class="section"><a href="facets/facet_categories.html#facets.facet_categories.narrow_string_to_utf_32_converti">Narrow
+      string to UTF-32 convertion <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+</dl></dd>
+<dt><span class="section"><a href="boost_stringify/how_to_add_support_to_a_new_dest.html">How to
+    add support to a new destination type (todo)</a></span></dt>
+<dt><span class="section"><a href="extend_input/how_to_add_support_to_a_new_inpu.html">How to add
+    support to a new input type (todo)</a></span></dt>
+<dt><span class="section"><a href="benchmarks/benchmarks.html">Benchmarks</a></span></dt>
+<dd><dl>
+<dt><span class="section"><a href="benchmarks/benchmarks.html#benchmarks.benchmarks.performance">Runtime performance
+      (writing to raw string)</a></span></dt>
+<dt><span class="section"><a href="benchmarks/benchmarks.html#benchmarks.benchmarks.compilation_perfomance">Compilation
+      times and generated binary size</a></span></dt>
+</dl></dd>
+</dl>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="boost_stringify.overview"></a><a class="link" href="index.html#boost_stringify.overview" title="Overview">Overview</a>
+</h2></div></div></div>
+<div class="warning"><table border="0" summary="Warning">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="../../doc/src/images/warning.png"></td>
+<th align="left">Warning</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+        This library is not part of the Boost C++ Libraries yet. It is still in and
+        early stage of development and subject to change without preserving backwards
+        compatibility.
+      </p></td></tr>
+</table></div>
+<p>
+      Boost.Stringify is a locale-independent formatting library which
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          has good <a class="link" href="benchmarks/benchmarks.html#benchmarks.benchmarks.performance" title="Runtime performance (writing to raw string)">performance</a>
+        </li>
+<li class="listitem">
+          supports all character types ( <code class="computeroutput"><span class="keyword">char</span></code>,
+          <code class="computeroutput"><span class="keyword">wchar_t</span></code>, <code class="computeroutput"><span class="keyword">char32_t</span></code>
+          and <code class="computeroutput"><span class="keyword">char16_t</span></code>)
+        </li>
+<li class="listitem">
+          supports many <a class="link" href="output_types/output_types.html" title="Destination types">destination types</a>
+        </li>
+<li class="listitem">
+          is extensible
+        </li>
+</ul></div>
+<h4>
+<a name="boost_stringify.overview.h0"></a>
+      <span class="phrase"><a name="boost_stringify.overview.as_static_library"></a></span><a class="link" href="index.html#boost_stringify.overview.as_static_library">As
+      static library</a>
+    </h4>
+<p>
+      By default Boost.Stringify is prepared to be used as a header-only library.
+      But can use it as a static library, which reduces <a class="link" href="benchmarks/benchmarks.html#benchmarks.benchmarks.compilation_perfomance" title="Compilation times and generated binary size">code
+      bloat</a>.
+    </p>
+<p>
+      In order to do this, you must define the macro <code class="computeroutput"><span class="identifier">BOOST_STRINGIFY_NOT_HEADER_ONLY</span></code>.
+    </p>
+<p>
+      And in order to build the library, since there is only one source file ( <a href="../../build/stringify.cpp" target="_top">build/stringify.cpp</a> ), probably the
+      best way it to just copy this file to your own project, and configure the use
+      the build system of your choice to generate the library file from it.
+    </p>
+<h4>
+<a name="boost_stringify.overview.h1"></a>
+      <span class="phrase"><a name="boost_stringify.overview.compliance"></a></span><a class="link" href="index.html#boost_stringify.overview.compliance">Compliance</a>
+    </h4>
+<p>
+      In its current state, Boost.Stringify is known to work in the following compilers:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          GCC 6 and 7
+        </li>
+<li class="listitem">
+          Clang 4.2
+        </li>
+<li class="listitem">
+          Visual Studio 2017 15.2
+        </li>
+</ul></div>
+<p>
+      However, more recent compilers may be necessary as the library evolves.
+    </p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"><p><small>Last revised: October 03, 2017 at 21:17:05 GMT</small></p></td>
+<td align="right"><div class="copyright-footer"></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav"><a accesskey="n" href="tutorial/tutorial.html"><img src="../../doc/src/images/next.png" alt="Next"></a></div>
+</body>
+</html>

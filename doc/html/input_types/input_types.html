@@ -1,0 +1,569 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Input types</title>
+<link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="prev" href="../output_types/output_types.html" title="Destination types">
+<link rel="next" href="../facets/facet_categories.html" title="Facet Categories">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../boost.png"></td>
+<td align="center"><a href="../../../index.html">Home</a></td>
+<td align="center"><a href="../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../output_types/output_types.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../facets/facet_categories.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="input_types.input_types"></a><a class="link" href="input_types.html" title="Input types">Input types</a>
+</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="input_types.html#input_types.input_types.conventional">"Conventional"
+      input types</a></span></dt>
+<dt><span class="section"><a href="input_types.html#input_types.input_types.special_input_types">"Special"
+      input types</a></span></dt>
+</dl></div>
+<p>
+      As previously explained, an input argument can be a single value or a <span class="emphasis"><em>braced-init-list</em></span>
+      composed by two arguments. Lets call the second argument as <span class="emphasis"><em>secundary
+      argument</em></span>.
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="input_types.input_types.conventional"></a><a class="link" href="input_types.html#input_types.input_types.conventional" title='"Conventional" input types'>"Conventional"
+      input types</a>
+</h3></div></div></div>
+<p>
+        A conventional argument can be:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            an integer ( <code class="computeroutput"><span class="keyword">short</span><span class="special">,</span>
+            <span class="keyword">int</span><span class="special">,</span>
+            <span class="keyword">long</span><span class="special">,</span>
+            <span class="keyword">long</span> <span class="keyword">long</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">short</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">int</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">long</span><span class="special">,</span> <span class="keyword">unsigned</span> <span class="keyword">long</span>
+            <span class="keyword">long</span></code>)
+          </li>
+<li class="listitem">
+            a string ( a raw string or a <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span></code>)
+          </li>
+<li class="listitem">
+            a single character <span class="emphasis"><em>( todo )</em></span>
+          </li>
+<li class="listitem">
+            a boolean <span class="emphasis"><em>( todo )</em></span>
+          </li>
+<li class="listitem">
+            a void pointer <span class="emphasis"><em>( todo )</em></span>
+          </li>
+<li class="listitem">
+            a floating point <span class="emphasis"><em>( todo )</em></span>
+          </li>
+</ul></div>
+<p>
+        <a name="conventional_formatting"></a>The <span class="emphasis"><em>secundary argument</em></span>
+        take the one the forms:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <em class="replaceable"><code>width</code></em>
+          </li>
+<li class="listitem">
+            <em class="replaceable"><code>formatting_string</code></em>
+          </li>
+<li class="listitem">
+            {<em class="replaceable"><code>width</code></em>, <em class="replaceable"><code>formatting_string</code></em>}
+          </li>
+<li class="listitem">
+            {<em class="replaceable"><code>width</code></em>, <em class="replaceable"><code>formatting_string</code></em>,
+            <em class="replaceable"><code>precision</code></em>}
+          </li>
+<li class="listitem">
+            {<em class="replaceable"><code>formatting_string</code></em>, <em class="replaceable"><code>precision</code></em>}
+          </li>
+</ul></div>
+<p>
+        <em class="replaceable"><code>width</code></em> and <em class="replaceable"><code>precision</code></em>
+        are <code class="computeroutput"><span class="keyword">int</span></code>. If <em class="replaceable"><code>width</code></em><code class="computeroutput">
+        <span class="special">&lt;</span> <span class="number">0</span></code>
+        then the width is taken from the facets. In the <em class="replaceable"><code>formatting_string</code></em>,
+        the characters order makes no difference, and unsupported characters are
+        ignored. If conflicting characters are present, then the character in a higher
+        row in the table below wins (for example, the formating string <code class="computeroutput"><span class="string">"+QW-xd&gt;&lt;$#"</span></code> has the same effect
+        of <code class="computeroutput"><span class="string">"-d&gt;$"</span></code>).
+      </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Formatting char
+                </p>
+              </th>
+<th>
+                <p>
+                  Meaning
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="literal">&gt;</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Right alignment ( or left, if you using a left-to-right script
+                  like arabic )
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">&lt;</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Left alignment ( or right, if you using a left-to-right script
+                  like arabic )
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">=</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Internal alignment
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">^</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Center alignment <span class="emphasis"><em>(todo)</em></span>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">-</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Dont show positive sign
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">+</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Show positive sign ( only affects signed integers )
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">c</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Lowercase
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">C</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Uppercase
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">d</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Decimal base
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">X</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Hexadecimal base and uppercase
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">x</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Hexadecimal base
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">o</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Octadecimal base
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">$</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Don't show base
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="literal">#</code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Show base
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<p>
+        Naturally, some of the formatting characters above are not supported in some
+        input types. Also, the <em class="replaceable"><code>precision</code></em> can actually
+        mean nothing related with precision:
+      </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Input type
+                </p>
+              </th>
+<th>
+                <p>
+                  Supported formatting chars
+                </p>
+              </th>
+<th>
+                <p>
+                  What <em class="replaceable"><code>precision</code></em> means
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  string
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="literal">&lt; &gt; = ^ </code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Nothing. Argument not supported. Presence yields to compilation
+                  error
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  boolean
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="literal">&lt; &gt; = ^ </code>
+                </p>
+              </td>
+<td>
+                <p>
+                  idem
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  void pointer
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="literal">&lt; &gt; = ^ </code>
+                </p>
+              </td>
+<td>
+                <p>
+                  idem
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  character
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="literal">&lt; &gt; = ^ </code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Repetitions. This character will be written <em class="replaceable"><code>precision</code></em>
+                  times
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  integer
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="literal">&lt; &gt; = ^ o d x X c C + - # $ </code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Leading zeros are inserted such that the number of digits is not
+                  less than <em class="replaceable"><code>precision</code></em>
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  floating point
+                </p>
+              </td>
+<td>
+                <p>
+                  <span class="emphasis"><em>(todo)</em></span>
+                </p>
+              </td>
+<td>
+                <p>
+                  floating point precision
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="input_types.input_types.special_input_types"></a><a class="link" href="input_types.html#input_types.input_types.special_input_types" title='"Special" input types'>"Special"
+      input types</a>
+</h3></div></div></div>
+<h4>
+<a name="input_types.input_types.special_input_types.h0"></a>
+        <span class="phrase"><a name="input_types.input_types.special_input_types.joins"></a></span><a class="link" href="input_types.html#input_types.input_types.special_input_types.joins">Joins</a>
+      </h4>
+<p>
+        Joins aligns a sublist of arguments as if it where one argument. A join is
+        created with one of the expressions
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">join_left</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">join_left</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>fill_character</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">join_rigth</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">join_rigth</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>fill_character</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">join_internal</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">join_internal</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>fill_character</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">join_internal</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>num_args_before_fill</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">join_internal</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>num_args_before_fill</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>fill_character</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+</ul></div>
+<p>
+        where:
+      </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <em class="replaceable"><code>width</code></em> is <code class="computeroutput"><span class="keyword">int</span></code>
+          </li>
+<li class="listitem">
+            <em class="replaceable"><code>num_args_before_fill</code></em> is <code class="computeroutput"><span class="keyword">int</span></code>
+          </li>
+<li class="listitem">
+            <em class="replaceable"><code>fill_character</code></em> is <code class="computeroutput"><span class="keyword">char32_t</span></code>
+          </li>
+</ul></div>
+<p>
+        The secondary argument is a sublist of arguments that will be aligned as
+        if they are one input argument.
+      </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">strf</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stringify</span><span class="special">::</span><span class="identifier">v0</span><span class="special">;</span>
+
+<span class="keyword">auto</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">make_string</span>
+   <span class="special">[{</span> <span class="string">"___["</span><span class="special">,</span> <span class="special">{</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">join_right</span><span class="special">(</span><span class="number">14</span><span class="special">),</span> <span class="special">{</span><span class="string">"abc"</span><span class="special">,</span> <span class="string">"def"</span><span class="special">,</span> <span class="number">123</span><span class="special">}},</span> <span class="string">"]___"</span><span class="special">}];</span>
+<span class="identifier">BOOST_ASSERT</span><span class="special">(</span><span class="identifier">result</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span> <span class="special">==</span> <span class="string">"___[     abcdef123]___"</span><span class="special">);</span>
+
+
+<span class="identifier">result</span> <span class="special">=</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">make_string</span>
+   <span class="special">[{</span> <span class="string">"___["</span><span class="special">,</span> <span class="special">{</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">join_left</span><span class="special">(</span><span class="number">14</span><span class="special">,</span> <span class="identifier">U</span><span class="char">'.'</span><span class="special">),</span> <span class="special">{</span><span class="string">"abc"</span><span class="special">,</span> <span class="special">{</span><span class="string">"def"</span><span class="special">,</span> <span class="number">5</span><span class="special">},</span> <span class="number">123</span><span class="special">}},</span> <span class="string">"]___"</span><span class="special">}];</span>
+<span class="identifier">BOOST_ASSERT</span><span class="special">(</span><span class="identifier">result</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span> <span class="special">==</span> <span class="string">"___[abc  def123...]___"</span><span class="special">);</span>
+
+
+<span class="identifier">result</span> <span class="special">=</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">make_string</span><span class="special">.</span><span class="identifier">with</span><span class="special">(</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">fill</span><span class="special">(</span><span class="identifier">U</span><span class="char">'~'</span><span class="special">))</span>
+   <span class="special">[{</span> <span class="string">"___["</span><span class="special">,</span> <span class="special">{</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">join_internal</span><span class="special">(</span><span class="number">14</span><span class="special">,</span> <span class="number">2</span><span class="special">),</span> <span class="special">{</span><span class="string">"abc"</span><span class="special">,</span> <span class="string">"def"</span><span class="special">,</span> <span class="number">123</span><span class="special">}},</span> <span class="string">"]___"</span><span class="special">}];</span>
+<span class="identifier">BOOST_ASSERT</span><span class="special">(</span><span class="identifier">result</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span> <span class="special">==</span> <span class="string">"___[abcdef~~~~~123]___"</span><span class="special">);</span>
+
+
+<span class="identifier">result</span> <span class="special">=</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">make_string</span><span class="special">.</span><span class="identifier">with</span><span class="special">(</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">fill</span><span class="special">(</span><span class="identifier">U</span><span class="char">'='</span><span class="special">))</span>
+   <span class="special">[{</span> <span class="string">"___["</span><span class="special">,</span> <span class="special">{</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">join_internal</span><span class="special">(</span><span class="number">14</span><span class="special">,</span> <span class="number">1</span><span class="special">,</span> <span class="char">'.'</span><span class="special">),</span> <span class="special">{{</span><span class="string">"abc"</span><span class="special">,</span> <span class="special">{</span><span class="number">5</span><span class="special">,</span> <span class="string">"&lt;"</span><span class="special">}},</span> <span class="string">"def"</span><span class="special">,</span> <span class="number">123</span><span class="special">}},</span> <span class="string">"]___"</span><span class="special">}];</span>
+<span class="identifier">BOOST_ASSERT</span><span class="special">(</span><span class="identifier">result</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span> <span class="special">==</span> <span class="string">"___[abc==...def123]___"</span><span class="special">);</span>
+</pre>
+<h4>
+<a name="input_types.input_types.special_input_types.h1"></a>
+        <span class="phrase"><a name="input_types.input_types.special_input_types.ftuple"></a></span><a class="link" href="input_types.html#input_types.input_types.special_input_types.ftuple">FTuple</a>
+      </h4>
+<p>
+        The secondary argument is a sublist of arguments under the influence of the
+        ftuple.
+      </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">strf</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">stringify</span><span class="special">::</span><span class="identifier">v0</span><span class="special">;</span>
+
+<span class="keyword">auto</span> <span class="identifier">outer_ftuple</span> <span class="special">=</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">make_ftuple</span><span class="special">(</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">width</span><span class="special">(</span><span class="number">3</span><span class="special">),</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">left</span><span class="special">);</span>
+<span class="keyword">auto</span> <span class="identifier">inner_ftuple</span> <span class="special">=</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">make_ftuple</span><span class="special">(</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">hex</span><span class="special">,</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">right</span><span class="special">);</span>
+
+<span class="keyword">auto</span> <span class="identifier">result</span> <span class="special">=</span> <span class="identifier">strf</span><span class="special">::</span><span class="identifier">make_string</span><span class="special">.</span><span class="identifier">with</span><span class="special">(</span><span class="identifier">outer_ftuple</span><span class="special">)</span>
+    <span class="special">[{</span><span class="number">10</span><span class="special">,</span> <span class="number">11</span><span class="special">,</span> <span class="special">{</span><span class="identifier">inner_ftuple</span><span class="special">,</span> <a class="co" name="input_types.input_types.special_input_types.c0" href="input_types.html#input_types.input_types.special_input_types.c1"><img src="../../../doc/src/images/callouts/1.png" alt="1" border="0"></a><span class="special">{</span><span class="string">"~~~"</span><span class="special">,</span> <span class="number">12</span><span class="special">,</span> <span class="number">13</span><span class="special">,</span> <span class="special">{</span><span class="number">14</span><span class="special">,</span> <span class="string">"d"</span><span class="special">},</span> <span class="number">15</span><span class="special">,</span> <span class="string">"~~~"</span><span class="special">}},</span> <span class="number">16</span><span class="special">,</span> <span class="number">17</span><span class="special">}];</span>
+
+<span class="identifier">BOOST_ASSERT</span><span class="special">(</span><span class="identifier">result</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span> <span class="special">==</span> <span class="string">"10 11 ~~~  c  d 14  f~~~16 17 "</span><span class="special">);</span> <a class="co" name="input_types.input_types.special_input_types.c2" href="input_types.html#input_types.input_types.special_input_types.c3"><img src="../../../doc/src/images/callouts/2.png" alt="2" border="0"></a>
+</pre>
+<div class="calloutlist"><table border="0" summary="Callout list">
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="input_types.input_types.special_input_types.c1"></a><a href="#input_types.input_types.special_input_types.c0"><img src="../../../doc/src/images/callouts/1.png" alt="1" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+            This sublist of arguments could contain just anything that can be inserted
+            in the outer argument list ( including another ftuple with its own argument
+            sublist ).
+          </p></td>
+</tr>
+<tr>
+<td width="5%" valign="top" align="left"><p><a name="input_types.input_types.special_input_types.c3"></a><a href="#input_types.input_types.special_input_types.c2"><img src="../../../doc/src/images/callouts/2.png" alt="2" border="0"></a> </p></td>
+<td valign="top" align="left"><p>
+            Note that <code class="computeroutput"><span class="identifier">outer_ftuple</span></code>
+            still has effect inside the sublist ( which is why width is 3 there ),
+            but the facets of <code class="computeroutput"><span class="identifier">inner_ftuple</span></code>
+            are prefered ( which is why arguments are aligned to the right )
+          </p></td>
+</tr>
+</table></div>
+<h4>
+<a name="input_types.input_types.special_input_types.h2"></a>
+        <span class="phrase"><a name="input_types.input_types.special_input_types.range_of_iterators_todo"></a></span><a class="link" href="input_types.html#input_types.input_types.special_input_types.range_of_iterators_todo">Range
+        of iterators <span class="emphasis"><em>(todo)</em></span></a>
+      </h4>
+<p>
+        The secondary argument is used as the secondary argument to each element
+        of the range.
+      </p>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer"><p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../output_types/output_types.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../facets/facet_categories.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

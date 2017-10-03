@@ -1,0 +1,2462 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Benchmarks</title>
+<link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="prev" href="../extend_input/how_to_add_support_to_a_new_inpu.html" title="How to add support to a new input type (todo)">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../boost.png"></td>
+<td align="center"><a href="../../../index.html">Home</a></td>
+<td align="center"><a href="../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../extend_input/how_to_add_support_to_a_new_inpu.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="benchmarks.benchmarks"></a><a class="link" href="benchmarks.html" title="Benchmarks">Benchmarks</a>
+</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="benchmarks.html#benchmarks.benchmarks.performance">Runtime performance
+      (writing to raw string)</a></span></dt>
+<dt><span class="section"><a href="benchmarks.html#benchmarks.benchmarks.compilation_perfomance">Compilation
+      times and generated binary size</a></span></dt>
+</dl></div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="benchmarks.benchmarks.performance"></a><a class="link" href="benchmarks.html#benchmarks.benchmarks.performance" title="Runtime performance (writing to raw string)">Runtime performance
+      (writing to raw string)</a>
+</h3></div></div></div>
+<p>
+        The table below shows the time it takes to execute each of the expressions
+        of the rightmost column. Boost.Stringify is compared againts Boost.Karma,
+        <a href="http://fmtlib.net/latest/index.html" target="_top">fmtlib</a> and sprintf.
+      </p>
+<div class="note"><table border="0" summary="Note">
+<tr>
+<td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="../../../doc/src/images/note.png"></td>
+<th align="left">Note</th>
+</tr>
+<tr><td align="left" valign="top"><p>
+          The runtime performance is likely to degrade as the library evolves.
+        </p></td></tr>
+</table></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">dest</span></code> is a <code class="computeroutput"><span class="keyword">char</span><span class="special">*</span></code>
+          </li>
+<li class="listitem">
+<p class="simpara">
+            <code class="computeroutput"><span class="identifier">fmt_writer</span></code> is a <code class="computeroutput"><span class="identifier">fmt</span><span class="special">::</span><span class="identifier">BasicArrayWriter</span><span class="special">&lt;</span><span class="keyword">char</span><span class="special">&gt;</span></code>,
+            from <a href="http://fmtlib.net/latest/index.html" target="_top">fmtlib</a>
+          </p>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                    <p>
+                      GCC 7.1 - Ubuntu 16.04
+                    </p>
+                  </th>
+<th>
+                    <p>
+                      MSVC 2017 15.2 - Windows 10
+                    </p>
+                  </th>
+<th>
+                    <p>
+                      Expression
+                    </p>
+                  </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                    <p>
+                      <span class="bold"><strong>small strings</strong></span>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      63.99 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      83.20 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="string">"Hello
+                      "</span><span class="special">,</span> <span class="string">"World"</span><span class="special">,</span> <span class="string">"!"</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      63.68 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      192.98 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">karma</span><span class="special">::</span><span class="identifier">lit</span><span class="special">(</span><span class="string">"Hello "</span><span class="special">)</span>
+                      <span class="special">&lt;&lt;</span> <span class="string">"World"</span>
+                      <span class="special">&lt;&lt;</span> <span class="string">"!"</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      43.97 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      63.49 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"Hello
+                      {}!"</span><span class="special">,</span> <span class="string">"World"</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      82.49 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      107.54 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"Hello %s!"</span><span class="special">,</span> <span class="string">"World"</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                    <p>
+                      <span class="bold"><strong>long string ( 1000 characters )</strong></span>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      89.69 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      580.54 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="string">"Hello
+                      "</span><span class="special">,</span> <span class="identifier">long_string</span><span class="special">,</span> <span class="string">"!"</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      329.74 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      3586.10 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">lit</span><span class="special">(</span><span class="string">"Hello "</span><span class="special">)</span>
+                      <span class="special">&lt;&lt;</span> <span class="identifier">long_string</span>
+                      <span class="special">&lt;&lt;</span> <span class="string">"!"</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      70.79 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      542.34 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"Hello
+                      {}!"</span><span class="special">,</span> <span class="identifier">long_string</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      833.96 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      200.58 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"Hello %s!"</span><span class="special">,</span> <span class="identifier">long_string</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                    <p>
+                      <span class="bold"><strong>integers</strong></span>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      27.69 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      36.84 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="number">25</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      7.57 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      7.52 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">karma</span><span class="special">::</span><span class="identifier">int_</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      40.49 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      68.63 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{}"</span><span class="special">,</span> <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      60.69 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      76.20 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%d"</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      41.25 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      49.40 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="identifier">INT_MAX</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      34.87 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      34.31 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">karma</span><span class="special">::</span><span class="identifier">int_</span><span class="special">,</span>
+                      <span class="identifier">INT_MAX</span><span class="special">);</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      47.90 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      72.63 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{}"</span><span class="special">,</span> <span class="identifier">INT_MAX</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      79.46 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      149.89 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%d"</span><span class="special">,</span>
+                      <span class="identifier">INT_MAX</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      58.77 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      66.98 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="identifier">LLONG_MAX</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      75.12 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      73.81 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">karma</span><span class="special">::</span><span class="identifier">long_long</span><span class="special">,</span>
+                      <span class="identifier">LLONG_MAX</span><span class="special">);</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      57.11 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      83.51 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{}"</span><span class="special">,</span> <span class="identifier">LLONG_MAX</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      117.22 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      304.18 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%lld"</span><span class="special">,</span>
+                      <span class="identifier">LLONG_MAX</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      68.47 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      89.97 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="number">25</span><span class="special">,</span> <span class="number">25</span><span class="special">,</span> <span class="number">25</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      21.68 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      37.01 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">int_</span> <span class="special">&lt;&lt;</span>
+                      <span class="identifier">int_</span> <span class="special">&lt;&lt;</span>
+                      <span class="identifier">int_</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      105.70 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      172.74 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{}{}{}"</span><span class="special">,</span> <span class="number">25</span><span class="special">,</span> <span class="number">25</span><span class="special">,</span> <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      122.54 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      157.19 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%d%d%d"</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      161.37 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      199.34 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="identifier">LLONG_MAX</span><span class="special">,</span> <span class="identifier">LLONG_MAX</span><span class="special">,</span> <span class="identifier">LLONG_MAX</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      210.51 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      232.63 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">long_long_x3</span><span class="special">,</span>
+                      <span class="identifier">LLONG_MAX</span><span class="special">,</span>
+                      <span class="identifier">LLONG_MAX</span><span class="special">,</span>
+                      <span class="identifier">LLONG_MAX</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      154.51 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      224.45 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{}{}{}"</span><span class="special">,</span> <span class="identifier">LLONG_MAX</span><span class="special">,</span> <span class="identifier">LLONG_MAX</span><span class="special">,</span> <span class="identifier">LLONG_MAX</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      268.69 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      826.84 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%d%d%d"</span><span class="special">,</span>
+                      <span class="identifier">LLONG_MAX</span><span class="special">,</span>
+                      <span class="identifier">LLONG_MAX</span><span class="special">,</span>
+                      <span class="identifier">LLONG_MAX</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      48.85 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      68.78 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{{</span><span class="number">25</span><span class="special">,</span> <span class="number">20</span><span class="special">}}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      40.47 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      62.66 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">.</span><span class="identifier">with</span><span class="special">(</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">width</span><span class="special">(</span><span class="number">20</span><span class="special">))</span> <span class="special">[{</span><span class="number">25</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      48.69 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      96.22 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">({</span><span class="identifier">join_right</span><span class="special">(</span><span class="number">20</span><span class="special">),</span> <span class="special">{</span><span class="number">25</span><span class="special">}})</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      115.34 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      172.52 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">right_align</span><span class="special">(</span><span class="number">20</span><span class="special">)[</span><span class="identifier">int_</span><span class="special">],</span>
+                      <span class="number">25</span><span class="special">);</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      49.37 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      75.31 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{:20}"</span><span class="special">,</span> <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      93.44 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      191.79 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%20d"</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      49.42 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      76.46 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{{</span><span class="number">25</span><span class="special">,</span> <span class="special">{</span><span class="number">6</span><span class="special">,</span>
+                      <span class="string">"&lt;+"</span><span class="special">}}}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      38.41 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      70.24 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">).</span><span class="identifier">with</span><span class="special">(</span><span class="identifier">width</span><span class="special">(</span><span class="number">6</span><span class="special">),</span>
+                      <span class="identifier">left</span><span class="special">,</span>
+                      <span class="identifier">showpos</span><span class="special">)</span>
+                      <span class="special">(</span><span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      49.26 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      85.68 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)({</span><span class="identifier">strf</span><span class="special">::</span><span class="identifier">make_ftuple</span><span class="special">(</span><span class="identifier">width</span><span class="special">(</span><span class="number">6</span><span class="special">),</span>
+                      <span class="identifier">left</span><span class="special">,</span>
+                      <span class="identifier">showpos</span><span class="special">),</span>
+                      <span class="special">{</span><span class="number">25</span><span class="special">}})</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      78.81 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      63.66 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">karma</span><span class="special">::</span><span class="identifier">left_align</span><span class="special">(</span><span class="number">6</span><span class="special">)[</span><span class="identifier">dec_showpos</span><span class="special">],</span>
+                      <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      55.19 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      78.98 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{:&lt;+6}"</span><span class="special">,</span> <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      83.55 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      157.08 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%6-+d"</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      38.09 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      63.13 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{{</span><span class="number">25</span><span class="special">,</span> <span class="string">"#x"</span><span class="special">}}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      26.16 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      54.49 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">.</span><span class="identifier">with</span><span class="special">(</span><span class="identifier">hex</span><span class="special">,</span> <span class="identifier">showbase</span><span class="special">)</span> <span class="special">[{</span><span class="number">25</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      30.20 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      86.13 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">d</span><span class="special">,</span>
+                      <span class="identifier">lit</span><span class="special">(</span><span class="string">"0x"</span><span class="special">)</span>
+                      <span class="special">&lt;&lt;</span> <span class="identifier">hex</span><span class="special">,</span> <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      49.29 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      74.02 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{:#x}"</span><span class="special">,</span> <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      65.26 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      88.04 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%#x"</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      102.75 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      158.92 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="number">25</span><span class="special">,</span> <span class="special">{</span><span class="number">25</span><span class="special">,</span>
+                      <span class="special">{</span><span class="number">6</span><span class="special">,</span> <span class="string">"&lt;+"</span><span class="special">}}</span> <span class="special">,</span>
+                      <span class="special">{</span><span class="number">25</span><span class="special">,</span> <span class="string">"#x"</span><span class="special">}}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      81.87 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      192.09 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">int_</span> <span class="special">&lt;&lt;</span>
+                      <span class="identifier">left_6_show</span> <span class="special">&lt;&lt;</span>
+                      <span class="string">"0x"</span> <span class="special">&lt;&lt;</span>
+                      <span class="identifier">hex</span><span class="special">,</span>
+                      <span class="number">25</span><span class="special">,</span><span class="number">25</span><span class="special">,</span><span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      120.76 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      182.32 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"{}{:&lt;6}{:#x}"</span><span class="special">,</span> <span class="number">25</span><span class="special">,</span> <span class="number">25</span><span class="special">,</span> <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      145.57 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      251.54 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"%d%-+6d%#x"</span><span class="special">,</span> <span class="number">25</span><span class="special">,</span> <span class="number">25</span><span class="special">,</span> <span class="number">25</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                  </td>
+</tr>
+<tr>
+<td>
+                  </td>
+<td>
+                  </td>
+<td>
+                    <p>
+                      <span class="bold"><strong>Strings and integers mixed</strong></span>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      86.80 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      124.44 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span><span class="identifier">dest</span><span class="special">)</span>
+                      <span class="special">[{</span><span class="string">"ten
+                      = "</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span>
+                      <span class="string">", twenty = "</span><span class="special">,</span> <span class="number">20</span><span class="special">}]</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      111.12 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      250.74 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">karma</span><span class="special">::</span><span class="identifier">generate</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="identifier">lit</span><span class="special">(</span><span class="string">"ten= "</span><span class="special">)</span>
+                      <span class="special">&lt;&lt;</span> <span class="identifier">int_</span>
+                      <span class="special">&lt;&lt;</span><span class="string">",
+                      twenty = "</span> <span class="special">&lt;&lt;</span>
+                      <span class="identifier">int_</span><span class="special">,</span>
+                      <span class="number">10</span><span class="special">,</span>
+                      <span class="number">20</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      90.98 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      139.22 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">fmt_writer</span><span class="special">.</span><span class="identifier">write</span><span class="special">(</span><span class="string">"ten =
+                      {}, twenty = {}"</span><span class="special">,</span>
+                      <span class="number">10</span><span class="special">,</span>
+                      <span class="number">20</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+<tr>
+<td>
+                    <p>
+                      113.72 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      214.56 ns
+                    </p>
+                  </td>
+<td>
+                    <p>
+                      <code class="computeroutput"><span class="identifier">sprintf</span><span class="special">(</span><span class="identifier">dest</span><span class="special">,</span>
+                      <span class="string">"ten = %d, twenty= %d"</span><span class="special">,</span> <span class="number">10</span><span class="special">,</span> <span class="number">20</span><span class="special">)</span></code>
+                    </p>
+                  </td>
+</tr>
+</tbody>
+</table></div>
+</li>
+</ul></div>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="benchmarks.benchmarks.compilation_perfomance"></a><a class="link" href="benchmarks.html#benchmarks.benchmarks.compilation_perfomance" title="Compilation times and generated binary size">Compilation
+      times and generated binary size</a>
+</h3></div></div></div>
+<p>
+        These samples were tested with gcc-7.1 on Ubuntu 16.04 64 bits. You can run
+        them in your system by executing <code class="literal">make</code> on <code class="literal">performance/compilation</code>
+        directory.
+      </p>
+<h5>
+<a name="benchmarks.benchmarks.compilation_perfomance.h0"></a>
+        <span class="phrase"><a name="benchmarks.benchmarks.compilation_perfomance.sample_1"></a></span><a class="link" href="benchmarks.html#benchmarks.benchmarks.compilation_perfomance.sample_1">sample 1</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Source file
+                </p>
+              </th>
+<th>
+                <p>
+                  Flags
+                </p>
+              </th>
+<th>
+                <p>
+                  Real time
+                </p>
+              </th>
+<th>
+                <p>
+                  User time
+                </p>
+              </th>
+<th>
+                <p>
+                  System time
+                </p>
+              </th>
+<th>
+                <p>
+                  Object file size
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample1_BoostStringify_header_only.cpp" target="_top">sample1_BoostStringify_header_only.cpp
+                  </a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  0.90 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.73 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.06 s
+                </p>
+              </td>
+<td>
+                <p>
+                  992 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.63 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.60 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  420 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  1.56 s
+                </p>
+              </td>
+<td>
+                <p>
+                  1.50 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  156 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample1_BoostStringify_static_lib.cpp" target="_top">sample1_BoostStringify_static_lib.cpp
+                  </a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  0.49 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.46 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  576 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.42 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.40 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.01 s
+                </p>
+              </td>
+<td>
+                <p>
+                  176 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  0.47 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.43 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.03 s
+                </p>
+              </td>
+<td>
+                <p>
+                  20 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample1_BoostFormat.cpp" target="_top">sample1_BoostFormat.cpp</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  0.83 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.78 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  640 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.75 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.72 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  280 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  1.38 s
+                </p>
+              </td>
+<td>
+                <p>
+                  1.34 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.03 s
+                </p>
+              </td>
+<td>
+                <p>
+                  112 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample1_fmtlib_header_only.cpp" target="_top">sample1_fmtlib_header_only.cpp</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  0.69 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.64 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  620 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.61 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.59 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  252 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  1.19 s
+                </p>
+              </td>
+<td>
+                <p>
+                  1.15 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.03 s
+                </p>
+              </td>
+<td>
+                <p>
+                  84 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample1_fmtlib.cpp" target="_top">sample1_fmtlib.cpp</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  0.39 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.36 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  232 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.35 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.30 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  32 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  0.36 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.33 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  4 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample1_ostream.cpp" target="_top">sample1_ostream.cpp</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  0.29 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.27 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  44 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.26 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.25 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.00 s
+                </p>
+              </td>
+<td>
+                <p>
+                  8 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  0.27 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.24 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  4 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample1_fprintf.cpp" target="_top">sample1_fprintf.cpp</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.01 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.00 s
+                </p>
+              </td>
+<td>
+                <p>
+                  12 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.01 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.00 s
+                </p>
+              </td>
+<td>
+                <p>
+                  4 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  0.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.00 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.00 s
+                </p>
+              </td>
+<td>
+                <p>
+                  4 K
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="benchmarks.benchmarks.compilation_perfomance.h1"></a>
+        <span class="phrase"><a name="benchmarks.benchmarks.compilation_perfomance.sample_2"></a></span><a class="link" href="benchmarks.html#benchmarks.benchmarks.compilation_perfomance.sample_2">sample 2</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Source file
+                </p>
+              </th>
+<th>
+                <p>
+                  Flags
+                </p>
+              </th>
+<th>
+                <p>
+                  Real time
+                </p>
+              </th>
+<th>
+                <p>
+                  User time
+                </p>
+              </th>
+<th>
+                <p>
+                  System time
+                </p>
+              </th>
+<th>
+                <p>
+                  Object file size
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample2_BoostStringify_header_only.cpp" target="_top">sample2_BoostStringify_header_only.cpp
+                  </a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  1.18 s
+                </p>
+              </td>
+<td>
+                <p>
+                  1.12 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.05 s
+                </p>
+              </td>
+<td>
+                <p>
+                  1704 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  1.05 s
+                </p>
+              </td>
+<td>
+                <p>
+                  1.01 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.03 s
+                </p>
+              </td>
+<td>
+                <p>
+                  808 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  2.07 s
+                </p>
+              </td>
+<td>
+                <p>
+                  2.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  288 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample2_BoostStringify_static_lib.cpp" target="_top">sample2_BoostStringify_static_lib.cpp
+                  </a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -G
+                </p>
+              </td>
+<td>
+                <p>
+                  0.75 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.69 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  988 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.65 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.59 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.05 s
+                </p>
+              </td>
+<td>
+                <p>
+                  384 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  1.08 s
+                </p>
+              </td>
+<td>
+                <p>
+                  1.03 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  76 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample2_fmtlib_header_only.cpp" target="_top">sample2_fmtlib_header_only.cpp</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  1.06 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.98 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.07 s
+                </p>
+              </td>
+<td>
+                <p>
+                  1140 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.95 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.91 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  508 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  2.34 s
+                </p>
+              </td>
+<td>
+                <p>
+                  2.29 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  176 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <a href="../../../performance/compilation/sample2_fmtlib.cpp" target="_top">sample2_fmtlib.cpp</a>
+                </p>
+              </td>
+<td>
+                <p>
+                  -g
+                </p>
+              </td>
+<td>
+                <p>
+                  0.94 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.88 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.05 s
+                </p>
+              </td>
+<td>
+                <p>
+                  976 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O0
+                </p>
+              </td>
+<td>
+                <p>
+                  0.84 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.80 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.04 s
+                </p>
+              </td>
+<td>
+                <p>
+                  424 K
+                </p>
+              </td>
+</tr>
+<tr>
+<td>
+              </td>
+<td>
+                <p>
+                  -O3
+                </p>
+              </td>
+<td>
+                <p>
+                  2.08 s
+                </p>
+              </td>
+<td>
+                <p>
+                  2.02 s
+                </p>
+              </td>
+<td>
+                <p>
+                  0.05 s
+                </p>
+              </td>
+<td>
+                <p>
+                  144 K
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer"><p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../extend_input/how_to_add_support_to_a_new_inpu.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a>
+</div>
+</body>
+</html>

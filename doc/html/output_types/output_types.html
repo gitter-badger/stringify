@@ -1,0 +1,435 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Destination types</title>
+<link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="prev" href="../tutorial/tutorial.html" title="Tutorial">
+<link rel="next" href="../input_types/input_types.html" title="Input types">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../boost.png"></td>
+<td align="center"><a href="../../../index.html">Home</a></td>
+<td align="center"><a href="../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../tutorial/tutorial.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../input_types/input_types.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="output_types.output_types"></a><a class="link" href="output_types.html" title="Destination types">Destination types</a>
+</h2></div></div></div>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+            </th>
+<th>
+              <p>
+                Destination type
+              </p>
+            </th>
+<th>
+              <p>
+                Expression
+              </p>
+            </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+              <p>
+                1
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span> <span class="special">&lt;</span></code><em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Traits</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Allocator</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">append_to</span>
+                <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                2
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span> <span class="special">&lt;</span></code><em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Traits</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Allocator</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">assign_to</span>
+                <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                3
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">string</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">make_string</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                4
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">u16string</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">make_u16string</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                5
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">u32string</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">make_u32string</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                6
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">wstring</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">make_wstring</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                7
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span></code><em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Traits</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Allocator</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">make_basic_string</span>
+                <span class="special">&lt;</span></code></strong></span><em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Traits</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Allocator</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">&gt;</span> <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                8
+              </p>
+            </td>
+<td>
+              <p>
+                <em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">*</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">write_to</span>
+                <span class="special">&lt;</span></code></strong></span><em class="replaceable"><code>Traits</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">&gt;</span> <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>limit</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>countptr</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                9
+              </p>
+            </td>
+<td>
+              <p>
+                <em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">*</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">write_to</span>
+                <span class="special">&lt;</span></code></strong></span><em class="replaceable"><code>Traits</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">&gt;</span> <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>end</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>countptr</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                10
+              </p>
+            </td>
+<td>
+              <p>
+                <em class="replaceable"><code>CharT[size]</code></em>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">write_to</span>
+                <span class="special">&lt;</span></code></strong></span><em class="replaceable"><code>Traits</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">&gt;</span> <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>countptr</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                11
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_streambuf</span> <span class="special">&lt;</span></code><em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>Traits</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">write_to</span>
+                <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>countptr</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                12
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">FILE</span><span class="special">*</span></code>
+                ( using narrow functions)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">write_to</span>
+                <span class="special">&lt;</span></code></strong></span><em class="replaceable"><code>CharT</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">&gt;</span> <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span></code> <em class="replaceable"><code>countptr</code></em>
+                <span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+<tr>
+<td>
+              <p>
+                13
+              </p>
+            </td>
+<td>
+              <p>
+                <code class="computeroutput"><span class="identifier">FILE</span><span class="special">*</span></code>
+                ( using wide functions)
+              </p>
+            </td>
+<td>
+              <p>
+                <span class="bold"><strong><code class="computeroutput"><span class="identifier">wwrite_to</span>
+                <span class="special">(</span></code></strong></span><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>countptr</code></em><span class="bold"><strong><code class="computeroutput"><span class="special">)</span></code></strong></span>
+                &#183;&#183;&#183;
+              </p>
+            </td>
+</tr>
+</tbody>
+</table></div>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          <em class="replaceable"><code>limit</code></em> is <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span></code>.
+          It determinates the maximum number of characters that can be written, including
+          the termination character.
+        </li>
+<li class="listitem">
+          <em class="replaceable"><code>countptr</code></em> is <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">size_t</span><span class="special">*</span></code> and is optional. The number of succefully
+          written characters will be assigned to <em class="replaceable"><code>*countptr</code></em>.
+        </li>
+<li class="listitem">
+          <em class="replaceable"><code>end</code></em> is <em class="replaceable"><code>CharT</code></em>*
+        </li>
+<li class="listitem">
+          <em class="replaceable"><code>CharT</code></em> can be <code class="computeroutput"><span class="keyword">char</span></code>,
+          <code class="computeroutput"><span class="keyword">char16_t</span></code>, <code class="computeroutput"><span class="keyword">char32_t</span></code>
+          or <code class="computeroutput"><span class="keyword">wchar_t</span></code>
+        </li>
+<li class="listitem">
+          "&#183;&#183;&#183;" is the remaining part of the expression
+          which shall contain the input arguments ( inside the <code class="computeroutput"><span class="special">[{</span>
+          <span class="special">}]</span></code> )
+        </li>
+</ul></div>
+<h4>
+<a name="output_types.output_types.h0"></a>
+      <span class="phrase"><a name="output_types.output_types.effect"></a></span><a class="link" href="output_types.html#output_types.output_types.effect">Effect</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          1) Append to string.
+        </li>
+<li class="listitem">
+          2) Assign to string.
+        </li>
+<li class="listitem">
+          3-7) Generate string.
+        </li>
+<li class="listitem">
+          8) Write raw string. Write at most <em class="replaceable"><code>limit</code></em> characters,
+          including the terminating null character, which is aways written, except
+          if <em class="replaceable"><code>limit</code></em><code class="computeroutput"> <span class="special">==</span>
+          <span class="number">0</span></code>.
+        </li>
+<li class="listitem">
+          9) Same as <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span></code><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>end</code></em><code class="computeroutput">
+          <span class="special">-</span> </code><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>countptr</code></em><code class="computeroutput"><span class="special">)</span></code>.
+        </li>
+<li class="listitem">
+          10) Same as <code class="computeroutput"><span class="identifier">write_to</span><span class="special">(</span></code><em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>size</code></em><code class="computeroutput"><span class="special">,</span> </code><em class="replaceable"><code>countptr</code></em><code class="computeroutput"><span class="special">)</span></code>.
+        </li>
+<li class="listitem">
+          11) Write content to <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_streambuf</span></code>.
+        </li>
+<li class="listitem">
+          12) Write content to <code class="computeroutput"><span class="identifier">FILE</span><span class="special">*</span></code> using narrow orientated functions.
+        </li>
+<li class="listitem">
+          13) Write content to <code class="computeroutput"><span class="identifier">FILE</span><span class="special">*</span></code> using wide orientated functions.
+        </li>
+</ul></div>
+<h4>
+<a name="output_types.output_types.h1"></a>
+      <span class="phrase"><a name="output_types.output_types.return_type"></a></span><a class="link" href="output_types.html#output_types.output_types.return_type">Return
+      type</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          1 - 2) <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">error_code</span></code>
+        </li>
+<li class="listitem">
+          3 - 7) <code class="computeroutput"><span class="identifier">expected_basic_string</span><span class="special">&lt;</span></code><em class="replaceable"><code>CharT<code class="computeroutput"><span class="special">,</span>
+          </code>Traits</code></em><code class="computeroutput"><span class="special">&gt;</span></code>,
+          which mimics <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">expected</span><span class="special">&lt;</span><span class="identifier">std</span><span class="special">::</span><span class="identifier">basic_string</span><span class="special">&lt;</span></code><em class="replaceable"><code>CharT<code class="computeroutput"><span class="special">,</span> </code>Traits</code></em><code class="computeroutput"><span class="special">&gt;,</span>
+          <span class="identifier">std</span><span class="special">::</span><span class="identifier">error_code</span><span class="special">&gt;</span></code>
+        </li>
+<li class="listitem">
+          8 - 13) <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">error_code</span></code>
+        </li>
+</ul></div>
+<h4>
+<a name="output_types.output_types.h2"></a>
+      <span class="phrase"><a name="output_types.output_types.on_error"></a></span><a class="link" href="output_types.html#output_types.output_types.on_error">On
+      error</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          1) Nothing is appended.
+        </li>
+<li class="listitem">
+          2) <em class="replaceable"><code>destination</code></em> becames empty.
+        </li>
+<li class="listitem">
+          8 - 10) <em class="replaceable"><code>destination</code></em><code class="computeroutput"><span class="special">[</span><span class="number">0</span><span class="special">]</span></code> is set
+          to <code class="computeroutput"><span class="char">'\0'</span></code>, unless <em class="replaceable"><code>limit</code></em>
+          is <code class="computeroutput"><span class="number">0</span></code>.
+        </li>
+</ul></div>
+<h4>
+<a name="output_types.output_types.h3"></a>
+      <span class="phrase"><a name="output_types.output_types.notes"></a></span><a class="link" href="output_types.html#output_types.output_types.notes">Notes</a>
+    </h4>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          1-7) An adequate capacity is reserved before writting any character so
+          that at most only one memory allocation happens inside the destination
+          string.
+        </li>
+<li class="listitem">
+          7) <em class="replaceable"><code>Allocator</code></em> is optional. If omitted, it is
+          <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">allocator</span><span class="special">&lt;</span></code><em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+        </li>
+<li class="listitem">
+          7-10) <em class="replaceable"><code>Traits</code></em> is optional. If omitted, it is
+          <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">char_traits</span><span class="special">&lt;</span></code><em class="replaceable"><code>CharT</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+        </li>
+<li class="listitem">
+          12) <em class="replaceable"><code>CharT</code></em> is optional. If omitted, it is <code class="computeroutput"><span class="keyword">char</span></code>
+        </li>
+<li class="listitem">
+          12-13) <code class="computeroutput"><span class="identifier">std</span><span class="special">::</span><span class="identifier">fflush</span></code> is <span class="underline">not</span>
+          called
+        </li>
+</ul></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer"><p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../tutorial/tutorial.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../input_types/input_types.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>

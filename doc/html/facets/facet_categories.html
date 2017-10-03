@@ -1,0 +1,818 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<title>Facet Categories</title>
+<link rel="stylesheet" href="../../../doc/src/boostbook.css" type="text/css">
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
+<link rel="home" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="up" href="../index.html" title="Chapter&#160;1.&#160;Boost.Stringify">
+<link rel="prev" href="../input_types/input_types.html" title="Input types">
+<link rel="next" href="../boost_stringify/how_to_add_support_to_a_new_dest.html" title="How to add support to a new destination type (todo)">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table cellpadding="2" width="100%"><tr>
+<td valign="top"><img alt="Boost C++ Libraries" width="277" height="86" src="../../../boost.png"></td>
+<td align="center"><a href="../../../index.html">Home</a></td>
+<td align="center"><a href="../../../libs/libraries.htm">Libraries</a></td>
+<td align="center"><a href="http://www.boost.org/users/people.html">People</a></td>
+<td align="center"><a href="http://www.boost.org/users/faq.html">FAQ</a></td>
+<td align="center"><a href="../../../more/index.htm">More</a></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../input_types/input_types.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../boost_stringify/how_to_add_support_to_a_new_dest.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h2 class="title" style="clear: both">
+<a name="facets.facet_categories"></a><a class="link" href="facet_categories.html" title="Facet Categories">Facet Categories</a>
+</h2></div></div></div>
+<div class="toc"><dl class="toc">
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.width">Width</a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.alignment_a_k_a_justification">Alignment
+      - <span class="emphasis"><em>a.k.a</em></span> justification</a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.fill_character">Fill character</a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.positive_sign_presence">Positive
+      sign presence</a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.integer_base">Integer base</a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.integer_base_indication_presence">Integer
+      base indication presence</a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.case">Case</a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.width_calculation_todo">Width
+      calculation <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.thousand_separator_todo">Thousand
+      separator <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.numeric_grouping_todo">Numeric
+      grouping <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.utf_32_to_narrow_string_converti">UTF-32
+      to narrow string convertion <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+<dt><span class="section"><a href="facet_categories.html#facets.facet_categories.narrow_string_to_utf_32_converti">Narrow
+      string to UTF-32 convertion <span class="emphasis"><em>(todo)</em></span></a></span></dt>
+</dl></div>
+<p>
+      Each of the following sub-sections describe a facet category.
+    </p>
+<p>
+      Facets are policy classes that comply the <span class="bold"><strong><span class="emphasis"><em>Requirements</em></span></strong></span>
+      described bellow. <code class="computeroutput"><span class="identifier">F</span></code> represents
+      the class name, and <code class="computeroutput"><span class="identifier">f</span></code> represents
+      an instance of <code class="computeroutput"><span class="identifier">F</span></code>. In addition
+      to the items listed in <span class="emphasis"><em>Requirements</em></span>, all facets must have:
+    </p>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+          A <span class="bold"><strong>copy constructor</strong></span>. And it should be a
+          fast, because facets are passed by copy in many operations - especially
+          during the construction of an ftuple. Fortunately, this should not be difficult
+          since there is no need to provide any non-const member function. Hence
+          if you need to implement a facet that needs to use some large complex data
+          structure, you can just ensure that such structure never changes and then
+          your facet can just hold a shared_ptr to it, and copy just that shared_ptr
+          in its copy contructor, instead of the whole structure.
+        </li>
+<li class="listitem">
+          The <span class="bold"><strong><code class="computeroutput"><span class="identifier">category</span></code></strong></span>
+          member type.
+        </li>
+</ul></div>
+<p>
+      However, unless you want to implement you own facet or to implement support
+      to a new input type, you don't need to pay attention to the facet requirements
+      but only to the <span class="bold"><strong><span class="emphasis"><em>Generator expressions</em></span></strong></span>
+      listed bellow. Each of them is a expression that returns a facet instance.
+      Some of them contian the <code class="computeroutput"><span class="identifier">_if</span></code>
+      suffix. These are shortcuts for constrained facets. For example, <code class="computeroutput"><span class="identifier">width_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">)</span></code> is equivalent to <code class="computeroutput"><span class="identifier">constrain</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;(</span><span class="identifier">width</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">))</span></code>
+    </p>
+<p>
+      <br> <br>
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.width"></a><a class="link" href="facet_categories.html#facets.facet_categories.width" title="Width">Width</a>
+</h3></div></div></div>
+<p>
+        Defines the width of each input as the quantity of <a href="https://en.wikipedia.org/wiki/En_(typography)" target="_top">en</a>
+        units. The algorithm that calculates this is defined by another facet category
+        - <a class="link" href="facet_categories.html#width_calculation">width calculation</a>.
+      </p>
+<h5>
+<a name="facets.facet_categories.width.h0"></a>
+        <span class="phrase"><a name="facets.facet_categories.width.requirements"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.width.requirements">Requirements</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Return type
+                </p>
+              </th>
+<th>
+                <p>
+                  description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">F</span><span class="special">::</span><span class="identifier">category</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">width_tag</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">f</span><span class="special">.</span><span class="identifier">width</span><span class="special">()</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">int</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  the width
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="facets.facet_categories.width.h1"></a>
+        <span class="phrase"><a name="facets.facet_categories.width.generator_expressions"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.width.generator_expressions">Generator
+        expressions</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">width</span><span class="special">(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">width_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;(</span></code><em class="replaceable"><code>width</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+</ul></div>
+<h5>
+<a name="facets.facet_categories.width.h2"></a>
+        <span class="phrase"><a name="facets.facet_categories.width.default_width_0"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.width.default_width_0">Default:
+        <code class="literal">width(0)</code></a>
+      </h5>
+</div>
+<p>
+      <br> <br>
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.alignment_a_k_a_justification"></a><a class="link" href="facet_categories.html#facets.facet_categories.alignment_a_k_a_justification" title="Alignment - a.k.a justification">Alignment
+      - <span class="emphasis"><em>a.k.a</em></span> justification</a>
+</h3></div></div></div>
+<h5>
+<a name="facets.facet_categories.alignment_a_k_a_justification.h0"></a>
+        <span class="phrase"><a name="facets.facet_categories.alignment_a_k_a_justification.requirements"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.alignment_a_k_a_justification.requirements">Requirements</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Return type
+                </p>
+              </th>
+<th>
+                <p>
+                  description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">F</span><span class="special">::</span><span class="identifier">category</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">alignment_tag</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">f</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">alignment</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<pre class="programlisting"><span class="keyword">enum</span> <span class="keyword">class</span> <span class="identifier">alignment</span><span class="special">{</span><span class="identifier">left</span><span class="special">,</span> <span class="identifier">right</span><span class="special">,</span> <span class="identifier">internal</span><span class="special">};</span>
+</pre>
+<h5>
+<a name="facets.facet_categories.alignment_a_k_a_justification.h1"></a>
+        <span class="phrase"><a name="facets.facet_categories.alignment_a_k_a_justification.generator_expressions"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.alignment_a_k_a_justification.generator_expressions">Generator
+        Expressions</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">left</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">right</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">internal</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">left_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">right_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">internal_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+</ul></div>
+<h5>
+<a name="facets.facet_categories.alignment_a_k_a_justification.h2"></a>
+        <span class="phrase"><a name="facets.facet_categories.alignment_a_k_a_justification.default_right"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.alignment_a_k_a_justification.default_right">Default:
+        <code class="literal">right</code></a>
+      </h5>
+</div>
+<p>
+      <br> <br>
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.fill_character"></a><a class="link" href="facet_categories.html#facets.facet_categories.fill_character" title="Fill character">Fill character</a>
+</h3></div></div></div>
+<h5>
+<a name="facets.facet_categories.fill_character.h0"></a>
+        <span class="phrase"><a name="facets.facet_categories.fill_character.requirements"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.fill_character.requirements">Requirements</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Return type
+                </p>
+              </th>
+<th>
+                <p>
+                  description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">F</span><span class="special">::</span><span class="identifier">category</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">fill_tag</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  todo
+                </p>
+              </td>
+<td>
+                <p>
+                  todo
+                </p>
+              </td>
+<td>
+                <p>
+                  todo
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="facets.facet_categories.fill_character.h1"></a>
+        <span class="phrase"><a name="facets.facet_categories.fill_character.generator_expressions"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.fill_character.generator_expressions">Generator
+        Expressions</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">fill</span><span class="special">(</span></code><em class="replaceable"><code>character</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">fill_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;(</span></code><em class="replaceable"><code>character</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+</ul></div>
+<h5>
+<a name="facets.facet_categories.fill_character.h2"></a>
+        <span class="phrase"><a name="facets.facet_categories.fill_character.default_fill_u"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.fill_character.default_fill_u">Default:
+        <code class="literal">fill(U' ')</code></a>
+      </h5>
+</div>
+<p>
+      <br> <br>
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.positive_sign_presence"></a><a class="link" href="facet_categories.html#facets.facet_categories.positive_sign_presence" title="Positive sign presence">Positive
+      sign presence</a>
+</h3></div></div></div>
+<p>
+        [Controls whether the positive sign "<code class="computeroutput"><span class="special">+</span></code>"
+        is present in non-negative numbers]
+      </p>
+<h5>
+<a name="facets.facet_categories.positive_sign_presence.h0"></a>
+        <span class="phrase"><a name="facets.facet_categories.positive_sign_presence.requirements"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.positive_sign_presence.requirements">Requirements</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Return type
+                </p>
+              </th>
+<th>
+                <p>
+                  description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">F</span><span class="special">::</span><span class="identifier">category</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">showpos_tag</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">f</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">bool</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  whether the positive sign shall be printed
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="facets.facet_categories.positive_sign_presence.h1"></a>
+        <span class="phrase"><a name="facets.facet_categories.positive_sign_presence.generator_expressions"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.positive_sign_presence.generator_expressions">Generator
+        Expressions</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">showpos</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">noshowpos</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">showpos</span><span class="special">(</span></code><em class="replaceable"><code>boolean</code></em><code class="computeroutput"><span class="special">)</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">showpos_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">noshowpos_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+</ul></div>
+<h5>
+<a name="facets.facet_categories.positive_sign_presence.h2"></a>
+        <span class="phrase"><a name="facets.facet_categories.positive_sign_presence.default_noshowpos"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.positive_sign_presence.default_noshowpos">Default:
+        <code class="literal">noshowpos</code></a>
+      </h5>
+</div>
+<p>
+      <br> <br>
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.integer_base"></a><a class="link" href="facet_categories.html#facets.facet_categories.integer_base" title="Integer base">Integer base</a>
+</h3></div></div></div>
+<h5>
+<a name="facets.facet_categories.integer_base.h0"></a>
+        <span class="phrase"><a name="facets.facet_categories.integer_base.requirements"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.integer_base.requirements">Requirements</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Return type
+                </p>
+              </th>
+<th>
+                <p>
+                  description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">F</span><span class="special">::</span><span class="identifier">category</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">intbase_tag</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">f</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">int</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  The base. Must be <code class="computeroutput"><span class="number">8</span></code>,
+                  <code class="computeroutput"><span class="number">10</span></code> or <code class="computeroutput"><span class="number">16</span></code>
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="facets.facet_categories.integer_base.h1"></a>
+        <span class="phrase"><a name="facets.facet_categories.integer_base.generator_expressions"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.integer_base.generator_expressions">Generator
+        Expressions</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">oct</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">dec</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">hex</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">oct_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">dec_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">hex_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+</ul></div>
+<h5>
+<a name="facets.facet_categories.integer_base.h2"></a>
+        <span class="phrase"><a name="facets.facet_categories.integer_base.default_dec"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.integer_base.default_dec">Default:
+        <code class="literal">dec</code></a>
+      </h5>
+</div>
+<p>
+      <br> <br>
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.integer_base_indication_presence"></a><a class="link" href="facet_categories.html#facets.facet_categories.integer_base_indication_presence" title="Integer base indication presence">Integer
+      base indication presence</a>
+</h3></div></div></div>
+<h5>
+<a name="facets.facet_categories.integer_base_indication_presence.h0"></a>
+        <span class="phrase"><a name="facets.facet_categories.integer_base_indication_presence.requirements"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.integer_base_indication_presence.requirements">Requirements</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Return type
+                </p>
+              </th>
+<th>
+                <p>
+                  description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">F</span><span class="special">::</span><span class="identifier">category</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">showbase_tag</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">f</span><span class="special">.</span><span class="identifier">value</span><span class="special">()</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">bool</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  whether the base indications be printed
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="facets.facet_categories.integer_base_indication_presence.h1"></a>
+        <span class="phrase"><a name="facets.facet_categories.integer_base_indication_presence.generator_expressions"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.integer_base_indication_presence.generator_expressions">Generator
+        Expressions</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">showbase</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">noshowbase</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">showbase</span><span class="special">(</span></code><em class="replaceable"><code>boolean</code></em><code class="computeroutput"><span class="special">)</span></code> -----------todo
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">showbase_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">noshowbase_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+</ul></div>
+<h5>
+<a name="facets.facet_categories.integer_base_indication_presence.h2"></a>
+        <span class="phrase"><a name="facets.facet_categories.integer_base_indication_presence.default_noshowbase"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.integer_base_indication_presence.default_noshowbase">Default:
+        <code class="literal">noshowbase</code></a>
+      </h5>
+</div>
+<p>
+      <br> <br>
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.case"></a><a class="link" href="facet_categories.html#facets.facet_categories.case" title="Case">Case</a>
+</h3></div></div></div>
+<h5>
+<a name="facets.facet_categories.case.h0"></a>
+        <span class="phrase"><a name="facets.facet_categories.case.requirements"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.case.requirements">Requirements</a>
+      </h5>
+<div class="informaltable"><table class="table">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead><tr>
+<th>
+                <p>
+                  Expression
+                </p>
+              </th>
+<th>
+                <p>
+                  Return type
+                </p>
+              </th>
+<th>
+                <p>
+                  description
+                </p>
+              </th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">F</span><span class="special">::</span><span class="identifier">category</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">case_tag</span></code>
+                </p>
+              </td>
+<td>
+              </td>
+</tr>
+<tr>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="identifier">f</span><span class="special">.</span><span class="identifier">uppercase</span><span class="special">()</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  <code class="computeroutput"><span class="keyword">bool</span></code>
+                </p>
+              </td>
+<td>
+                <p>
+                  Whether uppercase characters shall be used
+                </p>
+              </td>
+</tr>
+</tbody>
+</table></div>
+<h5>
+<a name="facets.facet_categories.case.h1"></a>
+        <span class="phrase"><a name="facets.facet_categories.case.generator_expressions"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.case.generator_expressions">Generator
+        Expressions</a>
+      </h5>
+<div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; ">
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">lowercase</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">uppercase</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">lowercase</span><span class="special">(</span></code><em class="replaceable"><code>boolean</code></em><code class="computeroutput"><span class="special">)</span></code> -----------todo
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">uppercase</span><span class="special">(</span></code><em class="replaceable"><code>boolean</code></em><code class="computeroutput"><span class="special">)</span></code> -----------todo
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">lowercase_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+<li class="listitem">
+            <code class="computeroutput"><span class="identifier">uppercase_if</span><span class="special">&lt;</span></code><em class="replaceable"><code>trait</code></em><code class="computeroutput"><span class="special">&gt;</span></code>
+          </li>
+</ul></div>
+<h5>
+<a name="facets.facet_categories.case.h2"></a>
+        <span class="phrase"><a name="facets.facet_categories.case.default_lowercase"></a></span><a class="link" href="facet_categories.html#facets.facet_categories.case.default_lowercase">Default:
+        <code class="literal">lowercase</code></a>
+      </h5>
+</div>
+<p>
+      <a name="width_calculation"></a><br> <br>
+    </p>
+<div class="section">
+<div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.width_calculation_todo"></a><a class="link" href="facet_categories.html#facets.facet_categories.width_calculation_todo" title="Width calculation (todo)">Width
+      calculation <span class="emphasis"><em>(todo)</em></span></a>
+</h3></div></div></div>
+<p>
+        Defines the algorithm used to calculate the width. You may choose a less
+        accurate but faster implementation or a more accurate but slower one. An
+        you may, of course, create your own implementation.
+      </p>
+<p>
+        It is assumed that the font is aways monospace.
+      </p>
+</div>
+<p>
+      <br> <br>
+    </p>
+<div class="section"><div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.thousand_separator_todo"></a><a class="link" href="facet_categories.html#facets.facet_categories.thousand_separator_todo" title="Thousand separator (todo)">Thousand
+      separator <span class="emphasis"><em>(todo)</em></span></a>
+</h3></div></div></div></div>
+<p>
+      <br> <br>
+    </p>
+<div class="section"><div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.numeric_grouping_todo"></a><a class="link" href="facet_categories.html#facets.facet_categories.numeric_grouping_todo" title="Numeric grouping (todo)">Numeric
+      grouping <span class="emphasis"><em>(todo)</em></span></a>
+</h3></div></div></div></div>
+<p>
+      <br> <br>
+    </p>
+<div class="section"><div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.utf_32_to_narrow_string_converti"></a><a class="link" href="facet_categories.html#facets.facet_categories.utf_32_to_narrow_string_converti" title="UTF-32 to narrow string convertion (todo)">UTF-32
+      to narrow string convertion <span class="emphasis"><em>(todo)</em></span></a>
+</h3></div></div></div></div>
+<p>
+      <br> <br>
+    </p>
+<div class="section"><div class="titlepage"><div><div><h3 class="title">
+<a name="facets.facet_categories.narrow_string_to_utf_32_converti"></a><a class="link" href="facet_categories.html#facets.facet_categories.narrow_string_to_utf_32_converti" title="Narrow string to UTF-32 convertion (todo)">Narrow
+      string to UTF-32 convertion <span class="emphasis"><em>(todo)</em></span></a>
+</h3></div></div></div></div>
+</div>
+<table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
+<td align="left"></td>
+<td align="right"><div class="copyright-footer"><p>
+        Distributed under the Boost Software License, Version 1.0. (See accompanying
+        file LICENSE_1_0.txt or copy at <a href="http://www.boost.org/LICENSE_1_0.txt" target="_top">http://www.boost.org/LICENSE_1_0.txt</a>)
+      </p></div></td>
+</tr></table>
+<hr>
+<div class="spirit-nav">
+<a accesskey="p" href="../input_types/input_types.html"><img src="../../../doc/src/images/prev.png" alt="Prev"></a><a accesskey="u" href="../index.html"><img src="../../../doc/src/images/up.png" alt="Up"></a><a accesskey="h" href="../index.html"><img src="../../../doc/src/images/home.png" alt="Home"></a><a accesskey="n" href="../boost_stringify/how_to_add_support_to_a_new_dest.html"><img src="../../../doc/src/images/next.png" alt="Next"></a>
+</div>
+</body>
+</html>
